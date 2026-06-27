@@ -1,0 +1,6 @@
+{
+  "name": "Happy Cub Studio",
+  "description": "Elite AI-powered content operating system for automated children's YouTube stories, including story outlines, asset logs, and direct n8n webhook orchestration configurations.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

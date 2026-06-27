@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  # 1. Happy Cub Studio - Main Application Server & API Gateway
+  happy-cub-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: happy-cub-app
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - APP_URL=${APP_URL:-http://localhost:3000}
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # 2. Relational Database - Postgres (Prepared for your production persistent storage)
+  postgres-db:
+    image: postgres:15-alpine
+    container_name: postgres-db
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=cub_admin
+      - POSTGRES_PASSWORD=secure_vps_database_pass_123
+      - POSTGRES_DB=happy_cub_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+
+  # 3. self-hosted n8n Automation Engine
+  n8n-automation:
+    image: docker.n8n.io/n8nio/n8n:latest
+    container_name: n8n-automation
+    restart: unless-stopped
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_PORT=5678
+      - N8N_SECURE_COOKIE=false
+      - WEBHOOK_URL=http://your-vps-ip:5678/
+    volumes:
+      - n8n_data:/home/node/.n8n
+
+volumes:
+  postgres_data:
+  n8n_data:
