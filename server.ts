@@ -3,11 +3,13 @@ import path from "path";
 import { createServer as createViteServer } from "vite";
 import { GoogleGenAI, Type } from "@google/genai";
 import dotenv from "dotenv";
+import healthRouter from "./server/routes/health";
 
 dotenv.config();
 
 const app = express();
 app.use(express.json());
+app.use("/api/v1", healthRouter);
 
 const PORT = 3000;
 
