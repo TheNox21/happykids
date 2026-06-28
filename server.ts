@@ -64,7 +64,7 @@ const stories: Story[] = [
     moral: "Sharing makes everyone happy",
     status: "Published",
     providerUsed: "Gemini",
-    modelUsed: "gemini-1.5-flash",
+    modelUsed: "gemini-2.5-flash",
     storyContent: "Once upon a time, in the heart of the Whispering Woods, lived Oliver, a cute little cub with fluffy brown fur and bright inquisitive eyes. Oliver loved picking sweet forest berries, but today he found a golden honey jar...",
     scenes: [
       {
@@ -161,7 +161,7 @@ app.post("/api/v1/stories", (req, res) => {
     moral: moral || "Kindness",
     status: status || "Draft",
     providerUsed: "Gemini",
-    modelUsed: process.env.GEMINI_MODEL || "gemini-1.5-flash",
+    modelUsed: process.env.GEMINI_MODEL || "gemini-2.5-flash",
     createdAt: new Date().toISOString()
   };
   stories.push(newStory);
@@ -224,7 +224,7 @@ app.post("/api/v1/ai/generate", async (req, res) => {
   }
 
   // Determine actual model to run
-  const defaultModel = process.env.GEMINI_MODEL || "gemini-1.5-flash";
+  const defaultModel = process.env.GEMINI_MODEL || "gemini-2.5-flash";
   const selectedModel = provider === "Gemini" ? (model === "gemini-pro" ? "gemini-3.1-pro-preview" : defaultModel) : (model || defaultModel);
 
   // Record an automation log

@@ -14,7 +14,12 @@ services:
       - NODE_ENV=production
       - PORT=3000
       - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - GEMINI_MODEL=${GEMINI_MODEL}
+      - LEONARDO_API_KEY=${LEONARDO_API_KEY}  
       - APP_URL=${APP_URL:-http://localhost:3000}
+      
+      
+  
     logging:
       driver: "json-file"
       options:
